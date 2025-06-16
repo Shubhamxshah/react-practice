@@ -1,13 +1,23 @@
-import React from 'react'
+'use client'
 
-type Props = {
-  children: React.ReactNode
-}
+import * as React from "react"
 
-const Bruh = (props: Props) => {
+export default function BatteryLevel() {
+  const [level, setLevel] = React.useState(0)
+
+  React.useEffect(() => {
+    console.log("Getting battery level...")
+    navigator.getBattery().then(battery => {
+      const newLevel = Math.round(battery.level * 100)
+
+      if (newLevel !== level) {
+        setLevel(newLevel)
+      }
+    })
+  })
+
+  console.log("Rendering")
   return (
-    <div>Bruh {props.children}</div>
+    <p>{level}%</p>
   )
 }
-
-export default Bruh
